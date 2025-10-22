@@ -66,7 +66,7 @@ export default function Navigation() {
                   onError={(e) => {
                     // Fallback to emoji if logo doesn't exist
                     e.currentTarget.style.display = 'none'
-                    e.currentTarget.nextElementSibling.style.display = 'block'
+                    e.currentTarget.nextElementSibling!.style.display = 'block'
                   }}
                 />
                 <span className="text-white font-bold text-lg hidden">💻</span>
