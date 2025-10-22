@@ -14,8 +14,15 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('Submitting form with data:', formData)
+    console.log('Environment variables:', {
+      serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+      templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+      publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+    })
+
     try {
-      await emailjs.send(
+      const result = await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         {
@@ -27,11 +34,12 @@ export default function Contact() {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       )
 
+      console.log('EmailJS result:', result)
       alert('Message sent successfully!')
       setFormData({ name: '', email: '', message: '' })
     } catch (error) {
       console.error('Error sending message:', error)
-      alert('Failed to send message. Please try again.')
+      alert(`Failed to send message. Error: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
   }
 
